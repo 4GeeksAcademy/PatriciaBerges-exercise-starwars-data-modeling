@@ -26,7 +26,6 @@ class Character(Base):
     eye_color = Column(String(20))
     height_cm = Column(Integer)
     birth_year = Column(String(20))
-    favorited_by = relationship('Favorites', back_populates='characters')
 
 class Planet(Base):
     __tablename__ = 'planet'
@@ -35,7 +34,6 @@ class Planet(Base):
     climate = Column(String(50))
     diameter = Column(Integer)
     population = Column(Integer)
-    favorited_by = relationship('Favorites', back_populates='planets')
 
 class Favorites(Base):
     __tablename__ = 'favorites'
@@ -43,8 +41,8 @@ class Favorites(Base):
     character_id = Column(Integer, ForeignKey('character.id'))
     planet_id = Column(Integer, ForeignKey('planet.id'))
     users = relationship('User', back_populates='favorites')
-    characters = relationship('Character', back_populates='favorited_by')
-    planets = relationship('Planet', back_populates='favorited_by')
+    characters = relationship('Character')
+    planets = relationship('Planet')
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
